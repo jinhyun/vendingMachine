@@ -55,6 +55,15 @@ public class TestVendingMachine {
     }
 
     @Test
+    public void isValidMoney() {
+        User user = new User();
+        assertFalse(user.isValidMoney(50));
+        assertFalse(user.isValidMoney(100));
+        assertTrue(user.isValidMoney(500));
+        assertTrue(user.isValidMoney(5000));
+    }
+
+    @Test
     public void testVendingMachineConstructor_initItemList() {
         String userItem = machine.getItemList().get(2);
 
@@ -125,7 +134,7 @@ public class TestVendingMachine {
         }
 
         public int putMoney(int money) {
-            if (money != 500 && money != 1000 && money != 5000) {
+            if (!isValidMoney(money)) {
                 System.out.println("[주의] "+money + "원은 사용할 수 없습니다");
                 return this.money;
             }
@@ -134,6 +143,17 @@ public class TestVendingMachine {
             System.out.println("[넣은금액] " + this.money + "원");
 
             return this.money;
+        }
+
+        public boolean isValidMoney(int money) {
+            int[] enableMoneyList = {500, 1000, 5000};
+
+            for (int enableMoney : enableMoneyList){
+                if (enableMoney == money){
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
