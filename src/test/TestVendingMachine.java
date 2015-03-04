@@ -11,10 +11,12 @@ import java.util.*;
  */
 public class TestVendingMachine {
     private VendingMachine machine;
+    private User user;
 
     @Before
     public void setUp() throws Exception {
         machine = new VendingMachine();
+        user = new User();
     }
 
     /*
@@ -40,7 +42,6 @@ public class TestVendingMachine {
     // 사용자가 상품의 번호로 선택한다
     @Test
     public void testChooseItem() {
-        User user = new User();
         VendingMachine userMachine = user.chooseItem(2);
 
         assertEquals(machine.getItemList().get(2),
@@ -51,7 +52,6 @@ public class TestVendingMachine {
     //  금액을 넣을때마다 금액이 출력된다
     @Test
     public void testPutMoney() {
-        User user = new User();
         assertEquals(0, user.putMoney(50));         // warning
         assertEquals(1000, user.putMoney(1000));    // success
         assertEquals(1500, user.putMoney(500));     // success
@@ -60,7 +60,6 @@ public class TestVendingMachine {
 
     @Test
     public void testIsValidMoney() {
-        User user = new User();
         assertFalse(user.isValidMoney(50));
         assertFalse(user.isValidMoney(100));
 
