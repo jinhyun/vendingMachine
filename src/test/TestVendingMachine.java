@@ -18,7 +18,7 @@ public class TestVendingMachine {
     /*
      * [v] 자판기의 상품이 출력된다 (상품번호와 금액을 출력한다)
      * [v] 사용자가 상품의 번호로 선택한다
-     * 사용자가 금액을 자판기에 넣는다(금액은 100, 500, 1000, 5000원권만 가능하다)
+     * 사용자가 금액을 자판기에 넣는다(금액은 500, 1000, 5000원권만 가능하다)
      *  금액을 넣을때마다 금액이 출력된다
      * 상품의 가격과 넣은 금액이 같거나 많을때 상품과 거스름돈을 출력한다
      */
@@ -41,6 +41,17 @@ public class TestVendingMachine {
 
         assertEquals(machine.getItemList().get(2),
                 userMachine.getItemList().get(0));
+    }
+
+    // 사용자가 금액을 자판기에 넣는다(금액은 500, 1000, 5000원권만 가능하다)
+    //  금액을 넣을때마다 금액이 출력된다
+    @Test
+    public void testPutMoney() {
+        User user = new User();
+        assertEquals(0, user.putMoney(50));
+        assertEquals(1000, user.putMoney(1000));
+        assertEquals(1500, user.putMoney(500));
+        assertEquals(1500, user.putMoney(100));
     }
 
     @Test
@@ -102,14 +113,27 @@ public class TestVendingMachine {
     }
 
     private class User {
+        private int money;
+
         public VendingMachine chooseItem(int itemNo) {
             VendingMachine machine = new VendingMachine();
             String userItem = machine.getItemList().get(itemNo-0);
 
-            System.out.println("[선택한 물품정보]");
-            System.out.println(userItem);
+            System.out.println("[선택한 물품정보] " + userItem);
 
             return new VendingMachine(userItem);
+        }
+
+        public int putMoney(int money) {
+            if (money != 500 && money != 1000 && money != 5000) {
+                System.out.println("[주의] "+money + "원은 사용할 수 없습니다");
+                return this.money;
+            }
+            this.money += money;
+
+            System.out.println("[넣은금액] " + this.money + "원");
+
+            return this.money;
         }
     }
 }
