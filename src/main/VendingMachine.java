@@ -1,59 +1,46 @@
 package main;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
 * Created by Jinhyun on 2015. 3. 4..
 */
 public class VendingMachine {
+    Item initItem = new Item();
+
     public VendingMachine() {
-        setItemList(initItemList());
+        setItemList(initItem.getInitItemList());
     }
 
-    public VendingMachine(String initItem) {
-        List<String> list = new ArrayList<>();
-        list.add(initItem);
-        setItemList(list);
-    }
-
-    public VendingMachine(List<String> initItemList){
+    public VendingMachine(List <Item> initItemList){
         setItemList(initItemList);
     }
 
-    private List<String> itemList;
+    private List <Item> itemList;
 
-    public void setItemList(List<String> itemList) {
+    public void setItemList(List <Item> itemList) {
         this.itemList = itemList;
     }
 
-    public List<String> getItemList() {
+    public List <Item> getItemList() {
         return itemList;
     }
 
-    public String viewItemList() {
-        String resultView = "";
+    public void viewItemList() {
         System.out.println("----------------------");
-        for (String result : itemList){
-            System.out.println(result);
-            resultView += result;
+        for (Item result : itemList){
+            String msg = "";
+            msg += result.getNumber()+".";
+            msg += result.getName()+": ";
+            msg += result.getPrice()+"원";
+            System.out.println(msg);
         }
         System.out.println("----------------------");
-        return resultView;
-    }
-
-    public List<String> initItemList() {
-        List <String> initItemList = new ArrayList<>();
-        initItemList.add("1: 자일리톨 (500원)");
-        initItemList.add("2: 아이폰6 (125,800원)");
-        initItemList.add("3: 스크류바 (1,200원)");
-        initItemList.add("4: 맥북 (299,900원)");
-        return initItemList;
     }
 
     public void operation(User user) {
         if (isEnoughMoney(user)){
-            String itemName = outItem();
+            String itemName = chooseItemName();
             System.out.println(itemName+"을(를) 구매해주셔서 감사합니다");
 
             int remainMoney = remainMoney(user);
@@ -62,14 +49,9 @@ public class VendingMachine {
     }
 
     public boolean isEnoughMoney(User user) {
-        String itemInfo = getItemList().get(0); // Error 발생률 높음 : 수정필
+        Item item = getItemList().get(0); // Error 발생률 높음 : 수정필
 
-        int startIdx = itemInfo.indexOf("(")+1;
-        int endIdx = itemInfo.lastIndexOf(")")-1;
-        String strItemPrice =
-                itemInfo.substring(startIdx, endIdx).replaceAll(",", "");
-
-        int itemPrice = Integer.parseInt(strItemPrice);
+        int itemPrice = item.getPrice();
         int userMoney = user.getMoney();
 
         if (itemPrice <= userMoney) {
@@ -79,23 +61,15 @@ public class VendingMachine {
         }
     }
 
-    public String outItem() {
-        String itemInfo = getItemList().get(0); // Error 발생률 높음 : 수정필
-        int startIdx = itemInfo.indexOf(":")+2;
-        int endIdx = itemInfo.indexOf("(")-1;
-
-        return itemInfo.substring(startIdx, endIdx);
+    public String chooseItemName() {
+        Item item = getItemList().get(0); // Error 발생률 높음 : 수정필
+        return item.getName();
     }
 
     public int remainMoney(User user) {
-        String itemInfo = getItemList().get(0); // Error 발생률 높음 : 수정필
+        Item item = getItemList().get(0); // Error 발생률 높음 : 수정필
 
-        int startIdx = itemInfo.indexOf("(")+1;
-        int endIdx = itemInfo.lastIndexOf(")")-1;
-        String strItemPrice =
-                itemInfo.substring(startIdx, endIdx).replaceAll(",", "");
-
-        int itemPrice = Integer.parseInt(strItemPrice);
+        int itemPrice = item.getPrice();
         int userMoney = user.getMoney();
 
         if (itemPrice < userMoney) {

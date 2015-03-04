@@ -1,18 +1,32 @@
 package main;
 
+import java.util.*;
+
 /**
 * Created by Jinhyun on 2015. 3. 4..
 */
 public class User {
     private int money;
 
+    // TODO: refactor
     public VendingMachine chooseItem(int itemNo) {
         VendingMachine machine = new VendingMachine();
-        String userItem = machine.getItemList().get(itemNo-0);
 
-        System.out.println("[선택한 물품정보] "+userItem);
+        List <Item> itemList = machine.getItemList();
+        Item item = itemList.get(itemNo); // TODO: matching itemNo
 
-        return new VendingMachine(userItem);
+        List <Item> chooseItemList = new ArrayList<>();
+        chooseItemList.add(item);
+
+        // TODO: refactor vm.viewItemList()
+        for (Item result : chooseItemList){
+            String msg = "[선택한 물품정보] ";
+            msg += result.getNumber()+".";
+            msg += result.getName()+": ";
+            msg += result.getPrice()+"원";
+            System.out.println(msg);
+        }
+        return new VendingMachine(chooseItemList);
     }
 
     public int putMoney(int money) {
