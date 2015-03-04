@@ -60,7 +60,7 @@ public class TestVendingMachine {
     }
 
     @Test
-    public void testOutItem() {
+    public void testIsEnoughMoney() {
         VendingMachine userMachine = user.chooseItem(2);
 
         user.putMoney(1000);
@@ -68,9 +68,20 @@ public class TestVendingMachine {
 
         user.putMoney(500);
         assertTrue(userMachine.isEnoughMoney(user));
+    }
 
+    @Test
+    public void testOutItem() {
+        VendingMachine userMachine = user.chooseItem(2);
+        user.putMoney(1500);
         assertEquals("스크류바", userMachine.outItem());
+    }
 
+    @Test
+    public void testRemainMoney() {
+        VendingMachine userMachine = user.chooseItem(2);
+        user.putMoney(1000);
+        user.putMoney(500);
         assertEquals(300, userMachine.remainMoney(user));
     }
 
