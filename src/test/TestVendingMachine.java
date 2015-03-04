@@ -13,7 +13,6 @@ public class TestVendingMachine {
     @Before
     public void setUp() throws Exception {
         machine = new VendingMachine();
-        machine.setInitItemList();
     }
 
     /*
@@ -44,7 +43,35 @@ public class TestVendingMachine {
                 userMachine.getItemList().get(0));
     }
 
+    @Test
+    public void testVendingMachineConstructor_initItemList() {
+        String userItem = machine.getItemList().get(2);
+
+        List <String> userItemList = new ArrayList<>();
+        userItemList.add(userItem);
+
+        VendingMachine vm1 = new VendingMachine(userItemList);
+        assertEquals(userItemList, vm1.getItemList());
+
+        VendingMachine vm2 = new VendingMachine(userItem);
+        assertEquals(userItemList, vm2.getItemList());
+    }
+
     private class VendingMachine {
+        public VendingMachine() {
+            setItemList(initItemList());
+        }
+
+        public VendingMachine(String initItem) {
+            List <String> list = new ArrayList<>();
+            list.add(initItem);
+            setItemList(list);
+        }
+
+        public VendingMachine(List<String> initItemList){
+            setItemList(initItemList);
+        }
+
         private List<String> itemList;
 
         public void setItemList(List<String> itemList) {
@@ -64,36 +91,25 @@ public class TestVendingMachine {
             return resultView;
         }
 
-        public void setInitItemList() {
-            itemList = new ArrayList<>();
-            itemList.add("1: 자일리톨 (500원)");
-            itemList.add("2: 아이폰6 (125,800원)");
-            itemList.add("3: 스크류바 (1,200원)");
-            itemList.add("4: 맥북 (299,900원)");
+        public List<String> initItemList() {
+            List <String> initItemList = new ArrayList<>();
+            initItemList.add("1: 자일리톨 (500원)");
+            initItemList.add("2: 아이폰6 (125,800원)");
+            initItemList.add("3: 스크류바 (1,200원)");
+            initItemList.add("4: 맥북 (299,900원)");
+            return initItemList;
         }
     }
 
     private class User {
-        private int itemNo;
-
-        public int getItemNo() {
-            return itemNo;
-        }
-
         public VendingMachine chooseItem(int itemNo) {
             VendingMachine machine = new VendingMachine();
-            machine.setInitItemList();
-            String choosedItem = machine.getItemList().get(itemNo-0);
+            String userItem = machine.getItemList().get(itemNo-0);
 
-            System.out.println("선택한 물품정보");
-            System.out.println(choosedItem);
+            System.out.println("[선택한 물품정보]");
+            System.out.println(userItem);
 
-            List <String> choosedItemList = new ArrayList<>();
-            choosedItemList.add(choosedItem);
-
-            VendingMachine userMachine = new VendingMachine();
-            userMachine.setItemList(choosedItemList);
-            return userMachine;
+            return new VendingMachine(userItem);
         }
     }
 }
