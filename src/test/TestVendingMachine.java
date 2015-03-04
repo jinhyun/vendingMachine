@@ -1,5 +1,7 @@
 package test;
 
+import main.User;
+import main.VendingMachine;
 import org.junit.*;
 import static org.junit.Assert.*;
 import java.util.*;
@@ -16,11 +18,13 @@ public class TestVendingMachine {
     }
 
     /*
-     * [v] 자판기의 상품이 출력된다 (상품번호와 금액을 출력한다)
-     * [v] 사용자가 상품의 번호로 선택한다
-     * [v] 사용자가 금액을 자판기에 넣는다(금액은 500, 1000, 5000원권만 가능하다)
-     *  [v] 금액을 넣을때마다 금액이 출력된다
-     * 상품의 가격과 넣은 금액이 같거나 많을때 상품과 거스름돈을 출력한다
+     * [v] feature: 자판기의 상품이 출력된다 (상품번호와 금액을 출력한다)
+     * [v] feature: 사용자가 상품의 번호로 선택한다
+     * [v] feature: 사용자가 금액을 자판기에 넣는다(금액은 500, 1000, 5000원권만 가능하다)
+     *  [v] feature: 금액을 넣을때마다 금액이 출력된다
+     * feature: 상품의 가격과 넣은 금액이 같거나 많을때 상품과 거스름돈을 출력한다
+     * [v] refactor: 클래스 분리
+     * refactor: 메세지 출력부 분리
      */
 
     // 자판기의 상품이 출력된다 (상품번호와 금액을 출력한다)
@@ -76,87 +80,5 @@ public class TestVendingMachine {
 
         VendingMachine vm2 = new VendingMachine(userItem);
         assertEquals(userItemList, vm2.getItemList());
-    }
-
-    private class VendingMachine {
-        public VendingMachine() {
-            setItemList(initItemList());
-        }
-
-        public VendingMachine(String initItem) {
-            List <String> list = new ArrayList<>();
-            list.add(initItem);
-            setItemList(list);
-        }
-
-        public VendingMachine(List<String> initItemList){
-            setItemList(initItemList);
-        }
-
-        private List<String> itemList;
-
-        public void setItemList(List<String> itemList) {
-            this.itemList = itemList;
-        }
-
-        public List<String> getItemList() {
-            return itemList;
-        }
-
-        public String viewItemList() {
-            String resultView = "";
-            System.out.println("----------------------");
-            for (String result : itemList){
-                System.out.println(result);
-                resultView += result;
-            }
-            System.out.println("----------------------");
-            return resultView;
-        }
-
-        public List<String> initItemList() {
-            List <String> initItemList = new ArrayList<>();
-            initItemList.add("1: 자일리톨 (500원)");
-            initItemList.add("2: 아이폰6 (125,800원)");
-            initItemList.add("3: 스크류바 (1,200원)");
-            initItemList.add("4: 맥북 (299,900원)");
-            return initItemList;
-        }
-    }
-
-    private class User {
-        private int money;
-
-        public VendingMachine chooseItem(int itemNo) {
-            VendingMachine machine = new VendingMachine();
-            String userItem = machine.getItemList().get(itemNo-0);
-
-            System.out.println("[선택한 물품정보] "+userItem);
-
-            return new VendingMachine(userItem);
-        }
-
-        public int putMoney(int money) {
-            if (!isValidMoney(money)) {
-                System.out.println("[주의] "+money+"원은 사용할 수 없습니다");
-                return this.money;
-            }
-            this.money += money;
-
-            System.out.println("[넣은금액] "+this.money+"원");
-
-            return this.money;
-        }
-
-        public boolean isValidMoney(int money) {
-            int[] enableMoneyList = {500, 1000, 5000};
-
-            for (int enableMoney : enableMoneyList){
-                if (enableMoney == money){
-                    return true;
-                }
-            }
-            return false;
-        }
     }
 }
