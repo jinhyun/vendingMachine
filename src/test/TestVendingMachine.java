@@ -27,15 +27,17 @@ public class TestVendingMachine {
     [v] feature: 사용자가 금액을 자판기에 넣는다
         [v] condition: 금액은 500, 1000, 5000원권만 가능하다
         [v] detail: 금액을 넣을때마다 금액이 출력된다
-    [ ] feature: 구매상품을 출력한다
-        [ ] condition: 상품가격과 넣은금액이 같거나 많을때
-        [ ] detail: 넣은금액 초기화
-        [ ] feature: 잔돈을 출력한다
+    [v] feature: 구매상품을 출력한다
+        [v] condition: 상품가격과 넣은금액이 같거나 많을때
+        [v] feature: 잔돈을 출력한다
     [ ] feature: 구매취소
         [ ] detail: 넣은금액 반환
 
     [v] refactor: 클래스 분리
-    [ ] refactor: 메세지 출력부 분리
+    [ ] refactor(VM): 상품 출력소스, 메세지 출력
+    [ ] refactor(All): 메세지 출력부 분리
+    [ ] refactor(VM): user.chooseItem() - 선택한 상품 객체생성
+    [ ] refactor(VM): VM.isEnoughMoney() - 오류발생률이 높다
      */
 
     // 자판기의 상품이 출력된다 (상품번호와 금액을 출력한다)
@@ -55,6 +57,28 @@ public class TestVendingMachine {
 
         assertEquals(machine.getItemList().get(2),
                 userMachine.getItemList().get(0));
+    }
+
+    @Test
+    public void testOutItem() {
+        VendingMachine userMachine = user.chooseItem(2);
+
+        user.putMoney(1000);
+        assertFalse(userMachine.isEnoughMoney(user));
+
+        user.putMoney(500);
+        assertTrue(userMachine.isEnoughMoney(user));
+
+        assertEquals("스크류바", userMachine.outItem());
+
+        assertEquals(300, userMachine.remainMoney(user));
+    }
+
+    @Test
+    public void testOpertaion() {
+        VendingMachine userMachine = user.chooseItem(2);
+        user.putMoney(1000);
+        userMachine.operation(user);
     }
 
     // 사용자가 금액을 자판기에 넣는다(금액은 500, 1000, 5000원권만 가능하다)

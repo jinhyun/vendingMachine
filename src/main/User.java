@@ -37,4 +37,8 @@ public class User {
         }
         return false;
     }
+
+    public int getMoney() {
+        return money;
+    }
 }

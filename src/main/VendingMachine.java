@@ -50,4 +50,58 @@ public class VendingMachine {
         initItemList.add("4: 맥북 (299,900원)");
         return initItemList;
     }
+
+    public void operation(User user) {
+        if (isEnoughMoney(user)){
+            String itemName = outItem();
+            System.out.println(itemName+"을(를) 구매해주셔서 감사합니다");
+
+            int remainMoney = remainMoney(user);
+            System.out.println("잔돈은 "+remainMoney+"원 입니다");
+        }
+    }
+
+    public boolean isEnoughMoney(User user) {
+        String itemInfo = getItemList().get(0); // Error 발생률 높음 : 수정필
+
+        int startIdx = itemInfo.indexOf("(")+1;
+        int endIdx = itemInfo.lastIndexOf(")")-1;
+        String strItemPrice =
+                itemInfo.substring(startIdx, endIdx).replaceAll(",", "");
+
+        int itemPrice = Integer.parseInt(strItemPrice);
+        int userMoney = user.getMoney();
+
+        if (itemPrice <= userMoney) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public String outItem() {
+        String itemInfo = getItemList().get(0); // Error 발생률 높음 : 수정필
+        int startIdx = itemInfo.indexOf(":")+2;
+        int endIdx = itemInfo.indexOf("(")-1;
+
+        return itemInfo.substring(startIdx, endIdx);
+    }
+
+    public int remainMoney(User user) {
+        String itemInfo = getItemList().get(0); // Error 발생률 높음 : 수정필
+
+        int startIdx = itemInfo.indexOf("(")+1;
+        int endIdx = itemInfo.lastIndexOf(")")-1;
+        String strItemPrice =
+                itemInfo.substring(startIdx, endIdx).replaceAll(",", "");
+
+        int itemPrice = Integer.parseInt(strItemPrice);
+        int userMoney = user.getMoney();
+
+        if (itemPrice < userMoney) {
+            return userMoney - itemPrice;
+        } else {
+            return 0;
+        }
+    }
 }
