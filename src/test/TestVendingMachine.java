@@ -18,14 +18,14 @@ public class TestVendingMachine {
     /*
      * [v] 자판기의 상품이 출력된다 (상품번호와 금액을 출력한다)
      * [v] 사용자가 상품의 번호로 선택한다
-     * 사용자가 금액을 자판기에 넣는다(금액은 500, 1000, 5000원권만 가능하다)
-     *  금액을 넣을때마다 금액이 출력된다
+     * [v] 사용자가 금액을 자판기에 넣는다(금액은 500, 1000, 5000원권만 가능하다)
+     *  [v] 금액을 넣을때마다 금액이 출력된다
      * 상품의 가격과 넣은 금액이 같거나 많을때 상품과 거스름돈을 출력한다
      */
 
     // 자판기의 상품이 출력된다 (상품번호와 금액을 출력한다)
     @Test
-    public void viewItemList() {
+    public void testViewItemList() {
         List<String> itemList = machine.getItemList();
         assertTrue(itemList.size() > 0);
 
@@ -35,7 +35,7 @@ public class TestVendingMachine {
 
     // 사용자가 상품의 번호로 선택한다
     @Test
-    public void chooseItem() {
+    public void testChooseItem() {
         User user = new User();
         VendingMachine userMachine = user.chooseItem(2);
 
@@ -48,17 +48,18 @@ public class TestVendingMachine {
     @Test
     public void testPutMoney() {
         User user = new User();
-        assertEquals(0, user.putMoney(50));
-        assertEquals(1000, user.putMoney(1000));
-        assertEquals(1500, user.putMoney(500));
-        assertEquals(1500, user.putMoney(100));
+        assertEquals(0, user.putMoney(50));         // warning
+        assertEquals(1000, user.putMoney(1000));    // success
+        assertEquals(1500, user.putMoney(500));     // success
+        assertEquals(1500, user.putMoney(100));     // warning
     }
 
     @Test
-    public void isValidMoney() {
+    public void testIsValidMoney() {
         User user = new User();
         assertFalse(user.isValidMoney(50));
         assertFalse(user.isValidMoney(100));
+
         assertTrue(user.isValidMoney(500));
         assertTrue(user.isValidMoney(5000));
     }
@@ -104,10 +105,12 @@ public class TestVendingMachine {
 
         public String viewItemList() {
             String resultView = "";
+            System.out.println("----------------------");
             for (String result : itemList){
                 System.out.println(result);
                 resultView += result;
             }
+            System.out.println("----------------------");
             return resultView;
         }
 
@@ -128,19 +131,19 @@ public class TestVendingMachine {
             VendingMachine machine = new VendingMachine();
             String userItem = machine.getItemList().get(itemNo-0);
 
-            System.out.println("[선택한 물품정보] " + userItem);
+            System.out.println("[선택한 물품정보] "+userItem);
 
             return new VendingMachine(userItem);
         }
 
         public int putMoney(int money) {
             if (!isValidMoney(money)) {
-                System.out.println("[주의] "+money + "원은 사용할 수 없습니다");
+                System.out.println("[주의] "+money+"원은 사용할 수 없습니다");
                 return this.money;
             }
             this.money += money;
 
-            System.out.println("[넣은금액] " + this.money + "원");
+            System.out.println("[넣은금액] "+this.money+"원");
 
             return this.money;
         }
