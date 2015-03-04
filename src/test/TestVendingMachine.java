@@ -13,7 +13,7 @@ public class TestVendingMachine {
     @Before
     public void setUp() throws Exception {
         machine = new VendingMachine();
-        machine.setTempItemList();
+        machine.setInitItemList();
     }
 
     /*
@@ -23,6 +23,8 @@ public class TestVendingMachine {
      *  금액을 넣을때마다 금액이 출력된다
      * 상품의 가격과 넣은 금액이 같거나 많을때 상품과 거스름돈을 출력한다
      */
+
+    // 자판기의 상품이 출력된다 (상품번호와 금액을 출력한다)
     @Test
     public void viewItemList() {
         List<String> itemList = machine.getItemList();
@@ -32,14 +34,14 @@ public class TestVendingMachine {
         assertTrue(resultView.length() > 0);
     }
 
+    // 사용자가 상품의 번호로 선택한다
     @Test
     public void chooseItem() {
         User user = new User();
-        VendingMachine choosedMachine = new VendingMachine();
-        choosedMachine = user.chooseItem(2);
+        VendingMachine userMachine = user.chooseItem(2);
 
         assertEquals(machine.getItemList().get(2),
-                choosedMachine.getItemList().get(0));
+                userMachine.getItemList().get(0));
     }
 
     private class VendingMachine {
@@ -62,7 +64,7 @@ public class TestVendingMachine {
             return resultView;
         }
 
-        public void setTempItemList() {
+        public void setInitItemList() {
             itemList = new ArrayList<>();
             itemList.add("1: 자일리톨 (500원)");
             itemList.add("2: 아이폰6 (125,800원)");
@@ -80,7 +82,7 @@ public class TestVendingMachine {
 
         public VendingMachine chooseItem(int itemNo) {
             VendingMachine machine = new VendingMachine();
-            machine.setTempItemList();
+            machine.setInitItemList();
             String choosedItem = machine.getItemList().get(itemNo-0);
 
             System.out.println("선택한 물품정보");
@@ -89,9 +91,9 @@ public class TestVendingMachine {
             List <String> choosedItemList = new ArrayList<>();
             choosedItemList.add(choosedItem);
 
-            VendingMachine resultMachine = new VendingMachine();
-            resultMachine.setItemList(choosedItemList);
-            return resultMachine;
+            VendingMachine userMachine = new VendingMachine();
+            userMachine.setItemList(choosedItemList);
+            return userMachine;
         }
     }
 }
