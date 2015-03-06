@@ -49,7 +49,8 @@ public class VendingMachine {
     }
 
     public boolean isEnoughMoney(User user) {
-        Item item = getItemList().get(0); // Error 발생률 높음 : 수정필
+        if (this.getItemList().size() < 1) throw new IllegalArgumentException();
+        Item item = this.getItemList().get(0);
 
         int itemPrice = item.getPrice();
         int userMoney = user.getMoney();
@@ -62,12 +63,14 @@ public class VendingMachine {
     }
 
     public String chooseItemName() {
-        Item item = getItemList().get(0); // Error 발생률 높음 : 수정필
+        if (this.getItemList().size() < 1) throw new IllegalArgumentException();
+        Item item = this.getItemList().get(0);
         return item.getName();
     }
 
     public int remainMoney(User user) {
-        Item item = getItemList().get(0); // Error 발생률 높음 : 수정필
+        if (this.getItemList().size() < 1) throw new IllegalArgumentException();
+        Item item = this.getItemList().get(0);
 
         int itemPrice = item.getPrice();
         int userMoney = user.getMoney();
