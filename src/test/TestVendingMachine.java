@@ -54,6 +54,11 @@ public class TestVendingMachine {
                 userMachine.getItemList().get(0).getName());
     }
 
+    @Test (expected = IllegalArgumentException.class)
+    public void testChooseItem_없는상품번호일경우() {
+        VendingMachine userMachine = user.chooseItem(6);
+    }
+
     @Test
     public void testIsEnoughMoney() {
         VendingMachine userMachine = user.chooseItem(2);

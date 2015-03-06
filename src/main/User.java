@@ -13,6 +13,12 @@ public class User {
         VendingMachine machine = new VendingMachine();
 
         List <Item> itemList = machine.getItemList();
+
+        System.out.println(itemList.size());
+        if (itemNo > itemList.size()){
+            throw new IllegalArgumentException("없는 상품번호");
+        }
+
         Item item = itemList.get(itemNo); // TODO: matching itemNo
 
         List <Item> chooseItemList = new ArrayList<>();
