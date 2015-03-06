@@ -1,11 +1,10 @@
 package test;
 
-import main.Item;
 import main.User;
+import main.UserVendingMachine;
 import main.VendingMachine;
 import org.junit.*;
 import static org.junit.Assert.*;
-import java.util.*;
 
 /**
  * Created by Jinhyun on 2015. 3. 3..
@@ -48,7 +47,7 @@ public class TestVendingMachine {
     // 사용자가 상품의 번호로 선택한다
     @Test
     public void testChooseItem() {
-        VendingMachine userMachine = user.chooseItem(2);
+        UserVendingMachine userMachine = user.chooseItem(2);
 
         assertEquals(machine.getItemList().get(2).getName(),
                 userMachine.getItemList().get(0).getName());
@@ -56,12 +55,12 @@ public class TestVendingMachine {
 
     @Test (expected = IllegalArgumentException.class)
     public void testChooseItem_없는상품번호일경우() {
-        VendingMachine userMachine = user.chooseItem(6);
+        UserVendingMachine userMachine = user.chooseItem(6);
     }
 
     @Test
     public void testIsEnoughMoney() {
-        VendingMachine userMachine = user.chooseItem(2);
+        UserVendingMachine userMachine = user.chooseItem(2);
 
         user.putMoney(1000);
         assertFalse(userMachine.isEnoughMoney(user));
@@ -72,13 +71,13 @@ public class TestVendingMachine {
 
     @Test
     public void testChooseItemName() {
-        VendingMachine userMachine = user.chooseItem(2);
+        UserVendingMachine userMachine = user.chooseItem(2);
         assertEquals("스크류바", userMachine.chooseItemName());
     }
 
     @Test
     public void testRemainMoney() {
-        VendingMachine userMachine = user.chooseItem(2);
+        UserVendingMachine userMachine = user.chooseItem(2);
         user.putMoney(1000);
         user.putMoney(500);
         assertEquals(300, userMachine.remainMoney(user));
@@ -86,7 +85,7 @@ public class TestVendingMachine {
 
     @Test
     public void testOpertaion() {
-        VendingMachine userMachine = user.chooseItem(2);
+        UserVendingMachine userMachine = user.chooseItem(2);
         user.putMoney(1000);
         user.putMoney(500);
         userMachine.operation(user);
@@ -104,24 +103,10 @@ public class TestVendingMachine {
 
     @Test
     public void testIsValidMoney() {
-        assertFalse(user.isValidMoney(50));
-        assertFalse(user.isValidMoney(100));
+        assertFalse(UserVendingMachine.isValidMoney(50));
+        assertFalse(UserVendingMachine.isValidMoney(100));
 
-        assertTrue(user.isValidMoney(500));
-        assertTrue(user.isValidMoney(5000));
-    }
-
-    @Test
-    public void testVendingMachineConstructor_initItemList() {
-//        String userItem = machine.getItemList().get(2);
-//
-//        List <String> userItemList = new ArrayList<>();
-//        userItemList.add(userItem);
-//
-//        VendingMachine vm1 = new VendingMachine(userItemList);
-//        assertEquals(userItemList, vm1.getItemList());
-//
-//        VendingMachine vm2 = new VendingMachine(userItem);
-//        assertEquals(userItemList, vm2.getItemList());
+        assertTrue(UserVendingMachine.isValidMoney(500));
+        assertTrue(UserVendingMachine.isValidMoney(5000));
     }
 }

@@ -7,16 +7,11 @@ import java.util.List;
 */
 public class VendingMachine {
     Item initItem = new Item();
+    private List <Item> itemList;
 
     public VendingMachine() {
         setItemList(initItem.getInitItemList());
     }
-
-    public VendingMachine(List <Item> initItemList){
-        setItemList(initItemList);
-    }
-
-    private List <Item> itemList;
 
     public void setItemList(List <Item> itemList) {
         this.itemList = itemList;
@@ -36,49 +31,5 @@ public class VendingMachine {
             System.out.println(msg);
         }
         System.out.println("----------------------");
-    }
-
-    public void operation(User user) {
-        if (isEnoughMoney(user)){
-            String itemName = chooseItemName();
-            System.out.println(itemName+"을(를) 구매해주셔서 감사합니다");
-
-            int remainMoney = remainMoney(user);
-            System.out.println("잔돈은 "+remainMoney+"원 입니다");
-        }
-    }
-
-    public boolean isEnoughMoney(User user) {
-        if (this.getItemList().size() < 1) throw new IllegalArgumentException();
-        Item item = this.getItemList().get(0);
-
-        int itemPrice = item.getPrice();
-        int userMoney = user.getMoney();
-
-        if (itemPrice <= userMoney) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public String chooseItemName() {
-        if (this.getItemList().size() < 1) throw new IllegalArgumentException();
-        Item item = this.getItemList().get(0);
-        return item.getName();
-    }
-
-    public int remainMoney(User user) {
-        if (this.getItemList().size() < 1) throw new IllegalArgumentException();
-        Item item = this.getItemList().get(0);
-
-        int itemPrice = item.getPrice();
-        int userMoney = user.getMoney();
-
-        if (itemPrice < userMoney) {
-            return userMoney - itemPrice;
-        } else {
-            return 0;
-        }
     }
 }
