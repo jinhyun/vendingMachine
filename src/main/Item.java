@@ -45,7 +45,7 @@ public class Item {
         Item iPhone6 = new Item();
         iPhone6.setNumber(2);
         iPhone6.setName("아이폰6");
-        iPhone6.setPrice(125800);
+        iPhone6.setPrice(5500);
 
         Item schrewBar = new Item();
         schrewBar.setNumber(3);
@@ -55,7 +55,7 @@ public class Item {
         Item macBook = new Item();
         macBook.setNumber(4);
         macBook.setName("맥북");
-        macBook.setPrice(299900);
+        macBook.setPrice(10000);
 
         itemList.add(xylitol);
         itemList.add(iPhone6);

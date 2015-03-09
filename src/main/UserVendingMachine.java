@@ -26,7 +26,7 @@ public class UserVendingMachine extends VendingMachine {
         Item item = getItemList().get(0);
 
         int itemPrice = item.getPrice();
-        int userMoney = user.getMoney();
+        int userMoney = user.getTotMoney();
 
         if (itemPrice <= userMoney) {
             return true;
@@ -35,13 +35,18 @@ public class UserVendingMachine extends VendingMachine {
         }
     }
 
-    public void operation(User user) {
+    public boolean operation(User user) {
+        if (user.getTotMoney() == 0) return false;
+
         if (isValidMoney(user.getMoney()) && isEnoughMoney(user)){
             String itemName = chooseItemName();
             System.out.println(itemName+"을(를) 구매해주셔서 감사합니다");
 
             int remainMoney = remainMoney(user);
             System.out.println("잔돈은 "+remainMoney+"원 입니다");
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -56,7 +61,7 @@ public class UserVendingMachine extends VendingMachine {
         Item item = getItemList().get(0);
 
         int itemPrice = item.getPrice();
-        int userMoney = user.getMoney();
+        int userMoney = user.getTotMoney();
 
         if (itemPrice < userMoney) {
             return userMoney - itemPrice;

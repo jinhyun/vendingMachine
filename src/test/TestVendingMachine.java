@@ -47,7 +47,7 @@ public class TestVendingMachine {
     // 사용자가 상품의 번호로 선택한다
     @Test
     public void testChooseItem() {
-        UserVendingMachine userMachine = user.chooseItem(2);
+        UserVendingMachine userMachine = user.chooseItem(3);
 
         assertEquals(machine.getItemList().get(2).getName(),
                 userMachine.getItemList().get(0).getName());
@@ -60,7 +60,7 @@ public class TestVendingMachine {
 
     @Test
     public void testIsEnoughMoney() {
-        UserVendingMachine userMachine = user.chooseItem(2);
+        UserVendingMachine userMachine = user.chooseItem(3);
 
         user.putMoney(1000);
         assertFalse(userMachine.isEnoughMoney(user));
@@ -71,13 +71,13 @@ public class TestVendingMachine {
 
     @Test
     public void testChooseItemName() {
-        UserVendingMachine userMachine = user.chooseItem(2);
+        UserVendingMachine userMachine = user.chooseItem(3);
         assertEquals("스크류바", userMachine.chooseItemName());
     }
 
     @Test
     public void testRemainMoney() {
-        UserVendingMachine userMachine = user.chooseItem(2);
+        UserVendingMachine userMachine = user.chooseItem(3);
         user.putMoney(1000);
         user.putMoney(500);
         assertEquals(300, userMachine.remainMoney(user));
@@ -85,7 +85,7 @@ public class TestVendingMachine {
 
     @Test
     public void testOpertaion() {
-        UserVendingMachine userMachine = user.chooseItem(2);
+        UserVendingMachine userMachine = user.chooseItem(3);
         user.putMoney(1000);
         user.putMoney(500);
         userMachine.operation(user);

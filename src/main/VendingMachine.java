@@ -31,5 +31,6 @@ public class VendingMachine {
             System.out.println(msg);
         }
         System.out.println("----------------------");
+        System.out.println("상품을 선택하세요");
     }
 }

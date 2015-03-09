@@ -7,8 +7,10 @@ import java.util.*;
 */
 public class User {
     private int money;
+    private int totMoney;
 
     public UserVendingMachine chooseItem(int itemNo) {
+        itemNo = itemNo - 1;
         VendingMachine machine = new VendingMachine();
 
         List <Item> itemList = machine.getItemList();
@@ -35,16 +37,22 @@ public class User {
     public int putMoney(int money) {
         if (!UserVendingMachine.isValidMoney(money)) {
             System.out.println("[주의] "+money+"원은 사용할 수 없습니다");
-            return this.money;
+            this.money = money;
+            return this.totMoney;
         }
-        this.money += money;
+        this.money = money;
+        this.totMoney += money;
 
-        System.out.println("[넣은금액] "+this.money+"원");
+        System.out.println("[넣은금액] "+this.totMoney+"원");
 
-        return this.money;
+        return this.totMoney;
     }
 
-    public int getMoney() {
+    public int getTotMoney() {
+        return totMoney;
+    }
+
+    public int getMoney(){
         return money;
     }
 }
